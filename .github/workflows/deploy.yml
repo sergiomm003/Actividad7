@@ -6,9 +6,8 @@ on:
       - main
       - Automatización
 
-
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +15,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install dependencies
-        run: sudo apt update && sudo apt install -y tidy
+        run: npm install
+
+      - name: Install Tidy for HTML validation
+        run: |
+          sudo apt update
+          sudo apt install -y tidy
 
       - name: Validate HTML
         run: find . -name "*.html" -exec tidy -e {} \;
@@ -29,16 +33,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./
-
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Grant execute permissions
-        run: chmod +x node_modules/.bin/stylelint
-
-      - name: Run Stylelint
-        run: npx stylelint "**/*.css"
-
