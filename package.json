@@ -1,5 +1,6 @@
 {
-  "scripts": {
-  "lint:css": "npx stylelint \"**/*.css\""
-}
+  "dependencies": {
+    "stylelint": "^16.17.0",
+    "stylelint-stylistic": "^1.0.0"  
+  }
 }
