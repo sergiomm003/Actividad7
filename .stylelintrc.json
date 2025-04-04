@@ -1,6 +1,10 @@
 {
+  "plugins": [
+    "stylelint-stylistic"
+  ],
   "rules": {
-    "string-quotes": "single",
-    "indentation": 2
+    "@stylistic/string-quotes": "single", 
+    "@stylistic/indentation": 2 
+    
   }
 }
