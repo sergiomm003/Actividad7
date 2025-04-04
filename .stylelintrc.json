@@ -1,8 +1,8 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
+    "string-quotes": "single",
     "indentation": 2,
-    "number-leading-zero": "always",
-    "string-quotes": "double"
+    "font-family-name-quotes": "always-where-recommended"
   }
 }
