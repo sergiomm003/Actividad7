@@ -1,0 +1,43 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - automatizacion # Ahora el flujo de trabajo se ejecutará cuando haya un push en la rama 'automatizacion'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # El flujo de trabajo se ejecutará en un entorno Ubuntu
+
+    steps:
+      # 1. Checkout del código
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Instalación de Node.js (si usas dependencias de JS como npm)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16" # Usa la versión que necesites, por ejemplo '16'
+
+      - name: Install Node.js dependencies
+        run: npm install # Instala las dependencias definidas en package.json (si las tienes)
+
+      # 3. Instalación de tidy y stylelint (para validación de HTML y CSS)
+      - name: Install dependencies (tidy, stylelint)
+        run: sudo apt update && sudo apt install -y tidy
+
+      # 4. Validación de HTML
+      - name: Validate HTML
+        run: find . -name "*.html" -exec tidy -e {} \;
+
+      # 5. Validación de CSS
+      - name: Validate CSS
+        run: npx stylelint "**/*.css"
+
+      # 6. Despliegue a GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./ # Aquí puedes cambiar el directorio de publicación si es necesario
